@@ -1,0 +1,332 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>PixelApp</title>
+<!-- 
+
+www.jadcode.com
+
+
+-->
+        {% load pwa %}
+
+        {% progressive_web_app_meta %}
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="{% static 'homepage/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'homepage/css/bootstrap-theme.min.css' %}">
+        <link rel="stylesheet" href="{% static 'homepage/css/fontAwesome.css' %}">
+        <link rel="stylesheet" href="{% static 'homepage/css/light-box.css' %}">
+        <link rel="stylesheet" href="{% static 'homepage/css/templatemo-style.css' %}">
+
+        <link href="https://fonts.googleapis.com/css?family=Kanit:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+        <script src="{% static 'homepage/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js' %}"></script>
+        
+        
+
+    </head>
+
+<body>
+
+    <nav>
+        <div class="logo">
+            <a href="/">App<em>HCN</em></a>
+        </div>
+        <div class="menu-icon">
+        <span></span>
+      </div>
+    </nav>
+
+    <div id="video-container">
+        <div class="video-overlay"></div>
+        <div class="video-content">
+            <br/><br/>
+            <div class="inner justify-content-center">
+              <h1>Bienvenidos<em> al Hotel Capnegret</em></h1>
+              <p>Uno de los mejores hoteles de Altea</p>
+              <p>Playa - Actividades y más</p>
+                <div class="scroll-icon">
+                    <a class="scrollTo" data-scrollTo="portfolio" href="#"><img src="{% static 'homepage/img/scroll-icon.png' %}" alt=""></a>
+                </div>    
+            </div>
+        </div>
+        <video autoplay="" loop="" muted>
+            
+            <source src="{% static 'homepage/img/highway-loop.mp4' %}" type="video/mp4" />
+        </video>
+    </div>
+
+    <div class="full-screen-portfolio" id="portfolio">
+        <div class="container-fluid">
+            {% if posts %}
+            {% for post in posts %}
+            <div class="col-md-4 col-sm-6">
+                <div class="portfolio-item">
+                    <a href="{% url 'post_detail' post.id %}">
+                        <div class="thumb">
+                            <div class="hover-effect">
+                                <div class="hover-content">
+                                    <h1>{{ post.title }}<em> {{ post.id }}</em></h1>
+                                    <p>{{ post.description }}</p>
+                                </div>
+                            </div>
+                            <div class="image">
+                                <img src="{{ post.image.url }}">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h1 align="center">Necesitas Crear una pagina<br />para tu App<br /><br /></h1>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+    <footer>
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <p>Copyright &copy; 2018 Pixelnetwork | Designed by Pixelteam</p>
+            </div>
+        </div>
+    </footer>
+
+
+      <!-- Modal button -->
+    <div class="popup-icon">
+      <button id="modBtn" class="modal-btn"><img src="{% static 'homepage/img/contact-icon.png' %}" alt=""></button>
+    </div>  
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <!-- Modal Content -->
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="header-title">Hola envianos un <em>mensaje</em></h3>
+                <div class="close-btn"><img src="{% static 'homepage/img/close_contact.png' %}" alt=""></div>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div class="col-md-6 col-md-offset-3">
+                    <form id="contact" action="" method="post">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <input name="name" type="text" class="form-control" id="name" placeholder="Your name..."
+                                        required="">
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <input name="email" type="email" class="form-control" id="email"
+                                        placeholder="Your email..." required="">
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <textarea name="message" rows="6" class="form-control" id="message"
+                                        placeholder="Your message..." required=""></textarea>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <button type="submit" id="form-submit" class="btn">Enviar ahora</button>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="overlay-menu">
+        <div class="container">
+            <div class="row">
+                <div class="main-menu">
+                    <ul>
+                        <li>
+                            <a href="/">Inicio</a>
+                        </li>
+                        <li>
+                            <a href="">Promociones</a>
+                        </li>
+                        <li>
+                            {% if request.user.is_authenticated %}
+                            <a href="">
+                                <i class="bx bx-user"></i> Bienvenido {{ request.user.username }}
+                            </a>
+                            {% else %}
+                            <a href="">
+                                <i class="bx bx-door-open"></i> Login
+                            </a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <p>- LAS MEJORES PROMOCIONES - </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{% static 'js/vendor/jquery-1.11.2.min.js' %}"><\/script>')</script>
+
+    <script src="{% static 'homepage/js/vendor/bootstrap.min.js' %}"></script>
+    
+    <script src="{% static 'homepage/js/plugins.js' %}"></script>
+    <script src="{% static 'homepage/js/main2.js' %}"></script>
+
+
+
+<!-- Modal m-16 -->
+
+<script src="{% static 'js/main.js' %}"></script>
+
+
+{{ namesala|json_script:"room-name" }}
+<script src="/static/channels/rec-ws.js"></script>
+<script>
+    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+    const protocol = window.location.protocol.indexOf("https") > -1 ? "wss" : "ws";
+    const schemaChannel = `${protocol}://${window.location.host}/videos/${roomName}/`;
+    window.addEventListener('DOMContentLoaded', () => {
+    });
+
+
+    const chatSocket = new ReconnectingWebSocket(schemaChannel, null, {reconnectInterval: 1500});
+
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        if (data.status) {
+            $('#contenedorVideo').html('<div id="player1"></div>');
+            $('#nombreVideo').html(data.nombre);
+            console.log(data);
+            $('#linkVideo').html("<a href='"+data.link_promo+"'> Click Promocion</a>");
+            selectVideo(data.idvideo)
+            $('#modal6').modal({keyboard: false, backdrop: 'static'}).modal("show");
+            console.log(data)
+        }
+    };
+
+    chatSocket.onopen = function (e) {
+        console.log('Chat socket is open');
+    };
+
+    chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    function consultar() {
+        chatSocket.send(JSON.stringify({
+            'consultar': true,
+        }));
+    }
+
+    $(document).ready(function () {
+        setInterval(consultar, 1000);
+        {#$('#modal6').modal({keyboard: true, backdrop: 'static'}).modal("show");#}
+    });
+
+
+    function selectVideo(idvideo) {
+        player = new YT.Player('player1', {
+            height: "1200",
+            width: "100%",
+            playerVars: {
+                'autoplay': 1,
+                'controls': 0,
+                "showinfo": 0,
+                'autohide': 1,
+                "modestbranding": 0,
+                'loop': 1,
+                'wmode': 'opaque'
+            },
+            videoId: idvideo,
+            events: {
+                'onReady': function (event) {
+                    event.target.mute();
+                    event.target.setVolume(100);
+                    event.target.playVideo();
+                },
+                'onStateChange': function (event) {
+                    if (event.data === YT.PlayerState.PLAYING) {
+                        console.log('Video: Playing');
+                    }
+
+                    if (event.data === YT.PlayerState.PAUSED) {
+                        console.log('Video: Paused');
+                    }
+
+                    if (event.data === YT.PlayerState.ENDED) {
+                        console.log('Video: Ended');
+                        $('#player1').remove();
+                        $('#modal6').modal('hide');
+                    }
+                }
+            }
+        });
+    }
+
+
+</script>
+
+
+<script>
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/player_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+
+
+</script>
+
+<link rel="stylesheet" href="/static/plyr/plyr.css">
+<script src="/static/plyr/plyr.js"></script>
+<script src="https://kit.fontawesome.com/a96c5b6f8d.js" crossorigin="anonymous"></script>
+
+
+
+<div class="modal fade justify-content-center" id="modal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content justify-content-center" style="background-color: #000">
+            <br /><br />
+            <div id="contenedorVideo">
+                <div class="mr-4 text-right"><i class="fa"></i><b id="linkVideo">Video Nombre!</b></div>
+                <div id="player1">
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-5 col-md-6">
+                        <br /><br />
+                        <!-- <h2 class="mr-4"><i class="fa"></i><b id="nombreVideo">Video Nombre!</b></h2>-->
+                        <div class="mr-4"><a onclick="player.unMute()" href="javascript:void(0);"><i
+                                    class="fas fa-volume-down size:4x"> </i> Activar Sonido | <b id="linkVideo">Video
+                                    Nombre!</b> </a>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
